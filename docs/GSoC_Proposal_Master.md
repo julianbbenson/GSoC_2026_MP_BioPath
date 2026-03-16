@@ -52,21 +52,21 @@ To solve these bottlenecks, the project will be executed using a polyglot archit
 ### 3.1 Module A: Genomic Data Ingestion & Boundary Mapping (Python)
 
 MP-BioPath utilizes a mathematical model where node activity values must strictly range from $0.01$ (100x decreased activity) to $100.0$ (100x increased activity). Standard differential expression pipelines output a continuous $\log_2(\text{Fold Change})$.
-Module A translates transcriptomic reality to solver boundaries:
+I have implemented a Module A pre-processor that translates transcriptomic reality to solver boundaries via:
 
-1. **Statistical Filtering:** Eliminate biological noise by dropping genes where $p_{adj} > 0.05$.
-2. **Transformation:** Convert $\log_2$ values to absolute multipliers using exponential transformation ($x = 2^{\log_2(\text{FC})}$).
-3. **Solver Stability Constraints:** Hard-clip extreme values to exactly $[0.01, 100.0]$ to prevent the JuMP solver from diverging toward infinity during optimization.
+1. **Statistical Filtering:** Eliminating biological noise by dropping genes where $p_{adj} > 0.05$.
+2. **Transformation:** Converting $\log_2$ values to absolute multipliers using exponential transformation ($x = 2^{\log_2(\text{FC})}$).
+3. **Solver Stability Constraints:** Hard-clipping extreme values to exactly $[0.01, 100.0]$ to prevent the JuMP solver from diverging toward infinity during optimization.
 
 <div align="center">
   <img src="mapping_volcano.png" width="450">
   <br>
-  <em>Module A: Volcano plot demonstrating statistical filtering (p < 0.05) and boundary mapping of RNA-seq data prior to JuMP solver ingestion.</em>
+  <em>Figure 7: Module A output demonstrating statistical filtering and boundary mapping of RNA-seq data prior to JuMP solver ingestion.</em>
 </div>
 
 ### 3.2 Module B: Graph Stitching & API Traversal (Python)
 
-The Stein Lab noted that false negatives spike significantly when biological paths cross arbitrary sub-pathway boundaries, leaving nodes disconnected (Figure 4). Module B will utilize the Reactome ContentService REST API (`/data/pathway/{id}/containedEvents`) to dynamically generate "Super-Logic Graphs."
+The Stein Lab noted that false negatives spike significantly when biological paths cross arbitrary sub-pathway boundaries, leaving nodes disconnected (Figure 4). 
 
 <div align="center">
   <img src="fig4.png" width="225">
@@ -74,7 +74,15 @@ The Stein Lab noted that false negatives spike significantly when biological pat
   <em>Figure 4: Distribution of predictions with respect to the existence of a directed path, demonstrating the false negative penalty of disconnected sub-pathways.</em>
 </div>
 
-* **Algorithm:** I will implement a Depth-First Search (DFS) walk-forward algorithm in Python. This will trace flow links across sub-pathway boundaries, dynamically fetching nested JSON logic tables to ensure terminal output nodes maintain mathematical linkage to the perturbed root inputs, explicitly solving the disconnected path issue shown in Figure 4.
+* **Algorithm:** I have implemented a Depth-First Search (DFS) walk-forward algorithm in Python. This traces flow links across sub-pathway boundaries, dynamically fetching nested JSON logic tables to ensure terminal output nodes maintain mathematical linkage to the perturbed root inputs, explicitly solving the disconnected path issue shown in Figure 4.
+
+<div align="center">
+  <img src="stitched_constellation_final.png" width="450">
+  <br>
+  <em>Figure 8: High-resolution Julia/GraphRecipes visualization of the 69-node stitched RAF/MAPK constellation, successfully resolving the disconnected path issue.</em>
+</div>
+
+* **Verification:** This algorithm successfully traces flow links across sub-pathway boundaries, dynamically fetching nested JSON logic tables. In initial testing on the RAF/MAP kinase cascade (R-HSA-5673001), this engine expanded the reaction network from ~50 to 69 discrete nodes, ensuring terminal output nodes maintain mathematical linkage to perturbed root inputs.
 
 ### 3.3 Module C: Expression-Informed Penalty Coefficients (Julia / JuMP.jl)
 
@@ -86,26 +94,28 @@ $$minimize \sum_{i \in N} w_i(p_i + n_i)$$
 
 Where $p_i$ and $n_i$ are positive/negative deviations, and $w_i$ is the node weight.
 
-**The Innovation (Dynamic Weighting):** I will update the `JuMP.jl` objective function to incorporate Expression-Informed Penalty Coefficients. By passing the normalized RNA-seq counts from Module A into the Julia environment, the weight $w_i$ of an entity set member will be dynamically scaled:
+**Future Direction (Optimization):** Building on the current Julia handshake, I will update the `JuMP.jl` objective function to incorporate Expression-Informed Penalty Coefficients. By passing the normalized RNA-seq counts from Module A into the Julia environment, the weight $w_i$ of an entity set member will be dynamically scaled:
 
 
 $$w_i' = w_i \times (\text{Normalized Tissue Expression})$$
 
 
-This forces the solver to heavily penalize deviations in physically transcribed isozymes while ignoring transcriptionally silent genes, completely resolving the Entity Set Dilution problem mathematically.
+This will force the solver to heavily penalize deviations in physically transcribed isozymes while ignoring transcriptionally silent genes, completely resolving the Entity Set Dilution problem mathematically.
 
 ### 3.4 Module D: Matrix Dimensionality Reduction via Heuristic Pruning
 
-To prevent computational bottlenecking, the Python pre-processor will utilize an exclusion dictionary of physiological buffer molecules (ATP, H2O, Pi). Rather than treating these hubs as unknown variables, the algorithm will mathematically constrain them as constants ($x = 1.0$). This domain-specific biological constraint drastically reduces the dimensionality of the matrices processed by the JuMP IPopt solver, improving execution speed and preventing combinatorial timeouts in massive Super-Logic Graphs.
+To prevent computational bottlenecking in massive Super-Logic Graphs, I have integrated an initial participant-filtering logic. 
+
+**Future Direction (Scaling):** The Python pre-processor will utilize an exclusion dictionary of physiological buffer molecules (ATP, H2O, Pi). Rather than treating these hubs as unknown variables, the algorithm will mathematically constrain them as constants ($x = 1.0$). This domain-specific biological constraint will drastically reduce the dimensionality of the matrices processed by the JuMP IPopt solver, improving execution speed and preventing combinatorial timeouts during large-scale database traversals.
 
 ---
 
 ## 4. Proposed 10-Week Timeline (175 Hours)
 
-* **Community Bonding (May):** Finalize Julia/Python polyglot environment; define ubiquitous substrate exclusion lists with mentor; define JSON schemas.
-* **Phase 1: Ingestion & API Integration (Weeks 1-4):** Develop `module_a_ingestion.py` for continuous log2 boundaries. Develop `module_b_graphs.py` to interface with the Reactome REST API and apply the Substrate Pruning algorithm (Module D) to the generated JSON graphs.
-* **Phase 2: Core Mathematical Upgrades (Weeks 5-7):** Upgrade the `JuMP.jl` objective functions (Module C). Implement dynamic tissue-specific weighting ($w_i$) to resolve Entity Set Dilution.
-* **Phase 3: Validation & Delivery (Weeks 8-10):** Benchmark the integrated pipeline against the "RAF/MAP kinase cascade" (Reactome ID: R-HSA-5673001) to ensure baseline accuracies (~94%) are maintained. Build reporting modules using the 15% biological significance threshold. Generate Dockerfiles and submit final PRs.
+* **Community Bonding (May):** Finalize ubiquitous substrate exclusion lists; define JSON-to-Julia handshake protocols for metabolic flow.
+* **Phase 1: Ingestion & API Integration (Weeks 1-4):** Scale the Tier 2 DFS engine to the full human Reactome database. Automate "Flow Edge" detection to link reactions via shared physical entity participants (inputs/outputs).
+* **Phase 2: Core Mathematical Upgrades (Weeks 5-7):** Integrate Tier 3 weighting logic into the `JuMP.jl` core. Resolve "BlackBoxEvent" penalties for non-linear metabolic sinks identified during graph traversal.
+* **Phase 3: Validation & Delivery (Weeks 8-10):** Benchmark the integrated pipeline against TCGA cancer datasets to compare predictive convergence against the 2022 baseline. Build reporting modules using the 15% biological significance threshold. Generate Dockerfiles and submit final PRs.
   * **Iteration & Stress-Testing:** Perform rigorous validation on the updated algorithm version, ensuring the integration pipeline remains robust across diverse modern genomic datasets.
 
 ---

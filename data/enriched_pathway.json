@@ -1,0 +1,366 @@
+{
+    "directed": true,
+    "multigraph": true,
+    "graph": {},
+    "nodes": [
+        {
+            "name": "RAF activation",
+            "type": "Pathway",
+            "id": "R-HSA-5673000"
+        },
+        {
+            "name": "Phosphorylation of RAF",
+            "type": "Reaction",
+            "id": "R-HSA-5672969"
+        },
+        {
+            "name": "MRAS:SHOC2:PPP1CC dephosphorylates inactive RAFs",
+            "type": "Reaction",
+            "id": "R-HSA-9658445"
+        },
+        {
+            "name": "p-S311,S406 KSR1:MARK3 binds YWHAB dimer",
+            "type": "Reaction",
+            "id": "R-HSA-5672954"
+        },
+        {
+            "name": "PP2A dephosphorylates KSR1",
+            "type": "Reaction",
+            "id": "R-HSA-5672957"
+        },
+        {
+            "name": "YWHAB dimer dissociates from KSR1:MARK3",
+            "type": "Reaction",
+            "id": "R-HSA-5672958"
+        },
+        {
+            "name": "Raf dimer inhibitors bind RAF heterodimers",
+            "type": "Reaction",
+            "id": "R-HSA-9653108"
+        },
+        {
+            "name": "PP2A dephosphorylates inactive RAFs",
+            "type": "Reaction",
+            "id": "R-HSA-5672961"
+        },
+        {
+            "name": "YWHAB dimer dissociates from dephosphorylated RAF",
+            "type": "Reaction",
+            "id": "R-HSA-5672960"
+        },
+        {
+            "name": "MARK3 phosphorylates KSR1",
+            "type": "Reaction",
+            "id": "R-HSA-5672948"
+        },
+        {
+            "name": "Inactive RAFs bind YWHAB",
+            "type": "Reaction",
+            "id": "R-HSA-5672951"
+        },
+        {
+            "name": "RAS:GTP:'activator' RAF homo/heterodimerizes with other RAF monomers",
+            "type": "Reaction",
+            "id": "R-HSA-5672966"
+        },
+        {
+            "name": "\"Activator\" RAF:YWHAB dimer binds RAS:GTP",
+            "type": "Reaction",
+            "id": "R-HSA-5672950"
+        },
+        {
+            "name": "SPRED dimer binds NF1",
+            "type": "Reaction",
+            "id": "R-HSA-5658438"
+        },
+        {
+            "name": "RAS GAPs stimulate RAS GTPase activity",
+            "type": "Reaction",
+            "id": "R-HSA-5658231"
+        },
+        {
+            "name": "RAS GAPs bind RAS:GTP",
+            "type": "Reaction",
+            "id": "R-HSA-5658435"
+        },
+        {
+            "name": "NF1 is degraded by the proteasome",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-5658430"
+        },
+        {
+            "name": "KBTBD7:CUL3:RBX1 ubiquitinates NF1",
+            "type": "Reaction",
+            "id": "R-HSA-5658424"
+        },
+        {
+            "name": "FNTB inhibitors bind FNTA:FNTB",
+            "type": "Reaction",
+            "id": "R-HSA-9647987"
+        },
+        {
+            "name": "S-Farn-Me KRAS4B binds calmodulin",
+            "type": "Reaction",
+            "id": "R-HSA-9653585"
+        },
+        {
+            "name": "Palmostatin B binds RAS depalmitoylases",
+            "type": "Reaction",
+            "id": "R-HSA-9647991"
+        },
+        {
+            "name": "pS181-S-Farn-Me KRAS4B binds BCL2L1",
+            "type": "Reaction",
+            "id": "R-HSA-9653595"
+        },
+        {
+            "name": "ARL2:GTP bind PDE6D on KRAS4B",
+            "type": "Reaction",
+            "id": "R-HSA-9654523"
+        },
+        {
+            "name": "RAS proteins are depalmitoylated",
+            "type": "Reaction",
+            "id": "R-HSA-9647994"
+        },
+        {
+            "name": "Calmodulin dissociates KRAS4B from the plasma membrane",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-9654521"
+        },
+        {
+            "name": "pS181-S-Farn-Me KRAS4B translocates to the outer mitochondrial membrane",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-9653592"
+        },
+        {
+            "name": "RCE1 cleaves S-Farn proRAS proteins",
+            "type": "Reaction",
+            "id": "R-HSA-9647999"
+        },
+        {
+            "name": "KRAS4B is phosphorylated on serine 181",
+            "type": "Reaction",
+            "id": "R-HSA-9653503"
+        },
+        {
+            "name": "PDE6D binds S-Farn-Me KRAS4B:CALM:4 Ca2+",
+            "type": "Reaction",
+            "id": "R-HSA-9654525"
+        },
+        {
+            "name": "Cysmethynil binds ICMT:Zn2+",
+            "type": "Reaction",
+            "id": "R-HSA-9656775"
+        },
+        {
+            "name": "mature p21 RAS binds GDP",
+            "type": "Reaction",
+            "id": "R-HSA-9649733"
+        },
+        {
+            "name": "KRAS4B recycles to the plasma membrane",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-9654533"
+        },
+        {
+            "name": "Mature S-Farn-Me KRAS4B translocates to plasma membrane",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-9649732"
+        },
+        {
+            "name": "pro-RAS proteins are farnesylated",
+            "type": "Reaction",
+            "id": "R-HSA-9647978"
+        },
+        {
+            "name": "USP17L2 deubiquitinates RCE1",
+            "type": "Reaction",
+            "id": "R-HSA-9653514"
+        },
+        {
+            "name": "ICMT methylates S-Farn RAS proteins",
+            "type": "Reaction",
+            "id": "R-HSA-9647977"
+        },
+        {
+            "name": "S-farn Me-HRAS, -NRAS and -KRAS4A are palmitoylated",
+            "type": "Reaction",
+            "id": "R-HSA-9647982"
+        },
+        {
+            "name": "Deltarasin binds PDE6D",
+            "type": "Reaction",
+            "id": "R-HSA-9656781"
+        },
+        {
+            "name": "mature RAS proteins translocate to plasma membrane",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-9647980"
+        },
+        {
+            "name": "PP5 dephosphorylates RAF1 S338",
+            "type": "Reaction",
+            "id": "R-HSA-5675433"
+        },
+        {
+            "name": "Nuclear DUSPs dephosphorylate MAPKs",
+            "type": "Reaction",
+            "id": "R-HSA-5675373"
+        },
+        {
+            "name": "BRAP binds KSR1:MARK3",
+            "type": "Reaction",
+            "id": "R-HSA-5674019"
+        },
+        {
+            "name": "Negative feedback regulation of MAPK pathway",
+            "type": "Pathway",
+            "id": "R-HSA-5674499"
+        },
+        {
+            "name": "Activated MAPK phosphorylates RAF1",
+            "type": "Reaction",
+            "id": "R-HSA-5675194"
+        },
+        {
+            "name": "Activated MAPKs phosphorylate BRAF",
+            "type": "Reaction",
+            "id": "R-HSA-5675198"
+        },
+        {
+            "name": "Activated MAPKs phosphorylate MAP2K1",
+            "type": "Reaction",
+            "id": "R-HSA-5674496"
+        },
+        {
+            "name": "BRAP binds RAS:GTP",
+            "type": "Reaction",
+            "id": "R-HSA-5674018"
+        },
+        {
+            "name": "MAPK12 phosphorylates PTPN3",
+            "type": "Reaction",
+            "id": "R-HSA-8868118"
+        },
+        {
+            "name": "PP2A dephosphorylates RAF1",
+            "type": "Reaction",
+            "id": "R-HSA-5675431"
+        },
+        {
+            "name": "BRAP autoubiquitinates",
+            "type": "Reaction",
+            "id": "R-HSA-5674022"
+        },
+        {
+            "name": "PEBP1 binds activated RAF1",
+            "type": "Reaction",
+            "id": "R-HSA-5675417"
+        },
+        {
+            "name": "PTPN3 dephosphorylates MAPK12",
+            "type": "Reaction",
+            "id": "R-HSA-8867658"
+        },
+        {
+            "name": "PTPN7 binds p-T,Y-MAPK",
+            "type": "Reaction",
+            "id": "R-HSA-9635743"
+        },
+        {
+            "name": "PAQR3 binds inactive RAFs",
+            "type": "Reaction",
+            "id": "R-HSA-5674140"
+        },
+        {
+            "name": "PTPN7 dephosphorylates p-T,Y-MAPKs",
+            "type": "Reaction",
+            "id": "R-HSA-9635739"
+        },
+        {
+            "name": "Cytosolic DUSPs dephosphorylate MAPKs",
+            "type": "Reaction",
+            "id": "R-HSA-5675376"
+        },
+        {
+            "name": "PTPN3 binds p-T183,Y185 MAPK12",
+            "type": "Reaction",
+            "id": "R-HSA-8867654"
+        },
+        {
+            "name": "Dual mechanism MAP2K inhibitors bind MAP2Ks",
+            "type": "Reaction",
+            "id": "R-HSA-9657599"
+        },
+        {
+            "name": "Single mechanism MAPK inhibitors bind phosphorylated MAPK",
+            "type": "Reaction",
+            "id": "R-HSA-9657608"
+        },
+        {
+            "name": "MAP2Ks phosphorylate MAPKs",
+            "type": "Reaction",
+            "id": "R-HSA-5672973"
+        },
+        {
+            "name": "MAP2Ks and MAPKs bind to the activated RAF complex",
+            "type": "Reaction",
+            "id": "R-HSA-5672972"
+        },
+        {
+            "name": "IL17RD binds p-2S MAP2Ks and MAPKs",
+            "type": "Reaction",
+            "id": "R-HSA-5674366"
+        },
+        {
+            "name": "Single mechanism MAP2K inhibitors bind phosphorylated MAP2Ks",
+            "type": "Reaction",
+            "id": "R-HSA-9657606"
+        },
+        {
+            "name": "MAP2Ks and MAPKs are phosphorylated at the endosome membrane",
+            "type": "BlackBoxEvent",
+            "id": "R-HSA-5674130"
+        },
+        {
+            "name": "RAF phosphorylates MAP2K dimer",
+            "type": "Reaction",
+            "id": "R-HSA-5672978"
+        },
+        {
+            "name": "MAP2Ks phosphorylate MAPK at the Golgi membrane",
+            "type": "Reaction",
+            "id": "R-HSA-5674373"
+        },
+        {
+            "name": "WDR83:LAMTOR2:LAMTOR3 binds MAPK components",
+            "type": "Reaction",
+            "id": "R-HSA-5674132"
+        },
+        {
+            "name": "Dissociation of RAS:RAF complex",
+            "type": "Reaction",
+            "id": "R-HSA-5672980"
+        },
+        {
+            "name": "Dual mechanism MAPK inhibitors bind MAPKs",
+            "type": "Reaction",
+            "id": "R-HSA-9657603"
+        }
+    ],
+    "edges": [
+        {
+            "relationship": "contains",
+            "source": "R-HSA-5673000",
+            "target": "R-HSA-5672969",
+            "key": 0
+        },
+        {
+            "relationship": "contains",
+            "source": "R-HSA-5674499",
+            "target": "R-HSA-5675194",
+            "key": 0
+        }
+    ]
+}
