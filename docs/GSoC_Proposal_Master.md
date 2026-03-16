@@ -19,16 +19,22 @@ To transition MP-BioPath into a high-throughput predictive engine for modern bio
 ### 2.1 The MP-BioPath Baseline & Optimization Thresholds
 MP-BioPath translates Reactome pathways into Logical Networks. In its 2022 evaluation, the Stein Lab evaluated 18,539 test cases against experimental literature. As demonstrated in their ROC curve analysis (Figure 3), the authors identified that a computationally predicted continuous change of 15% maximized the F1 score for classifying discrete up/down biological regulation. However, the tool currently operates strictly as a retrospective literature-validation engine.
 
-![Figure 3: The relationship between MP-BioPath sensitivity (TPR) and false positive rate (FPR) at different cutoffs.]   (fig3.png)  
-*Figure 3: The relationship between MP-BioPath sensitivity (TPR) and false positive rate (FPR) at different cutoffs.*
+<div align="center">
+  <img src="fig3.png" width="225">
+  <br>
+  <em>Figure 3: The relationship between MP-BioPath sensitivity (TPR) and false positive rate (FPR) at different cutoffs.</em>
+</div>
 
 ### 2.2 Bottleneck A: The Non-Linear Dynamics of Gene Expression Regulation (GER)
 While the 15% cutoff established a strong baseline, the study identified specific biological scenarios where predictive accuracy collapsed. As highlighted in the original author's error analysis (Figure 6), Gene Expression Regulation (GER) discrepancies formed a massive portion of the false negatives. 
 
 Unlike rapid Post-Translational Modifications (PTM) which act as binary switches, transcription is inherently quantitative—relying on promoter affinities and mRNA accumulation. Standard logic graphs default to qualitative states, failing to capture the physical reality of transcriptomic accumulation. 
 
-![Figure 6: Reasons for discordance between MP-BioPath-based predictions and published evidence, highlighting GER and Entity Set dilution.](fig6.png)  
-*Figure 6: Reasons for discordance between MP-BioPath-based predictions and published evidence, highlighting GER and Entity Set dilution.*
+<div align="center">
+  <img src="fig6.png" width="225">
+  <br>
+  <em>Figure 6: Reasons for discordance between MP-BioPath-based predictions and published evidence, highlighting GER and Entity Set dilution.</em>
+</div>
 
 ### 2.3 Bottleneck B: Entity Set Dilution & The 1/N Penalty
 Figure 6 further highlights "Entity Set" discrepancies. Reactome frequently groups isozymes into unified sets. Currently, MP-BioPath assigns equal mathematical weights to all members. If a target node contains 10 tissue-specific isozymes, but only 1 is physically transcribed in the target tissue, the solver applies an artificial 1/10 weight reduction to the active node. This mathematical dilution dampens the calculated output signal, driving the prediction below the 15% threshold and generating a false negative.
@@ -52,15 +58,21 @@ Module A translates transcriptomic reality to solver boundaries:
 2. **Transformation:** Convert $\log_2$ values to absolute multipliers using exponential transformation ($x = 2^{\log_2(\text{FC})}$).
 3. **Solver Stability Constraints:** Hard-clip extreme values to exactly $[0.01, 100.0]$ to prevent the JuMP solver from diverging toward infinity during optimization.
 
-![Module A: Volcano plot demonstrating statistical filtering (p < 0.05) and boundary mapping of RNA-seq data prior to JuMP solver ingestion.](mapping_volcano.png)  
-*Volcano plot demonstrating statistical filtering (p < 0.05) and boundary mapping of RNA-seq data prior to JuMP solver ingestion.*
+<div align="center">
+  <img src="mapping_volcano.png" width="450">
+  <br>
+  <em>Module A: Volcano plot demonstrating statistical filtering (p < 0.05) and boundary mapping of RNA-seq data prior to JuMP solver ingestion.</em>
+</div>
 
 ### 3.2 Module B: Graph Stitching & API Traversal (Python)
 
 The Stein Lab noted that false negatives spike significantly when biological paths cross arbitrary sub-pathway boundaries, leaving nodes disconnected (Figure 4). Module B will utilize the Reactome ContentService REST API (`/data/pathway/{id}/containedEvents`) to dynamically generate "Super-Logic Graphs."
 
-![Figure 4: Distribution of predictions with respect to the existence of a directed path, demonstrating the false negative penalty of disconnected sub-pathways.](fig4.png)  
-*Figure 4: Distribution of predictions with respect to the existence of a directed path, demonstrating the false negative penalty of disconnected sub-pathways.*
+<div align="center">
+  <img src="fig4.png" width="225">
+  <br>
+  <em>Figure 4: Distribution of predictions with respect to the existence of a directed path, demonstrating the false negative penalty of disconnected sub-pathways.</em>
+</div>
 
 * **Algorithm:** I will implement a Depth-First Search (DFS) walk-forward algorithm in Python. This will trace flow links across sub-pathway boundaries, dynamically fetching nested JSON logic tables to ensure terminal output nodes maintain mathematical linkage to the perturbed root inputs, explicitly solving the disconnected path issue shown in Figure 4.
 
