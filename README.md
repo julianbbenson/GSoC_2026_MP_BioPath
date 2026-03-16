@@ -3,6 +3,8 @@
 **Author:** Julian Benson (B.S. Biochemistry & Molecular Biology)
 **Target:** Reactome / Open Genome Informatics (GSoC 2026)
 
+**[Read the Full GSoC 2026 Architectural Proposal Here](https://github.com/julianbbenson/GSoC_2026_MP_BioPath/blob/main/docs/GSoC_Proposal_Master.md)**
+
 ## Project Overview
 This repository contains the data ingestion and optimization bridge designed to transition [MP-BioPath](https://github.com/OICR/mp-biopath) from a literature-validation tool to a high-throughput predictive engine for genomic data. 
 
