@@ -88,14 +88,16 @@ To prevent computational bottlenecking, the Python pre-processor will utilize an
 ## 4. Proposed 10-Week Timeline (175 Hours)
 
 * **Community Bonding (May):** Finalize Julia/Python polyglot environment; define ubiquitous substrate exclusion lists with mentor; define JSON schemas.
-* **Phase 1 (Weeks 1-4):** Develop `module_a_ingestion.py` for continuous log2 boundaries. Develop `module_b_graphs.py` to interface with the Reactome REST API and apply the Substrate Pruning algorithm (Module D) to the generated JSON graphs.
-* **Phase 2 (Weeks 5-7):** Upgrade the `JuMP.jl` objective functions (Module C). Implement dynamic tissue-specific weighting ($w_i$) to resolve Entity Set Dilution.
-* **Phase 3 (Weeks 8-10):** Benchmark the integrated pipeline against the "RAF/MAP kinase cascade" (Reactome ID: R-HSA-5673001) to ensure baseline accuracies (~94%) are maintained. Build reporting modules using the 15% biological significance threshold. Generate Dockerfiles and submit final PRs.
+* **Phase 1: Ingestion & API Integration (Weeks 1-4):** Develop `module_a_ingestion.py` for continuous log2 boundaries. Develop `module_b_graphs.py` to interface with the Reactome REST API and apply the Substrate Pruning algorithm (Module D) to the generated JSON graphs.
+* **Phase 2: Core Mathematical Upgrades (Weeks 5-7):** Upgrade the `JuMP.jl` objective functions (Module C). Implement dynamic tissue-specific weighting ($w_i$) to resolve Entity Set Dilution.
+* **Phase 3: Validation & Delivery (Weeks 8-10):** Benchmark the integrated pipeline against the "RAF/MAP kinase cascade" (Reactome ID: R-HSA-5673001) to ensure baseline accuracies (~94%) are maintained. Build reporting modules using the 15% biological significance threshold. Generate Dockerfiles and submit final PRs.
+  * **Iteration & Stress-Testing:** Perform rigorous validation on the updated algorithm version, ensuring the integration pipeline remains robust across diverse modern genomic datasets.
 
 ---
 
 ## 5. About the Candidate
-As an undergraduate researcher in Biochemistry & Molecular Biology, I specialize in bridging the gap between physical cellular reality and high-throughput computational models. My independent quantitative coursework focuses heavily on RNA-seq differential expression, statistical validation, and dimensionality reduction. I utilize a polyglot architecture (Python, R, Julia) to ensure that the right tool is used for the right computational bottleneck, whether it is data munging or non-linear mathematical programming.
+As an undergraduate student in Biochemistry & Molecular Biology, my research focus centers on integrating foundational cellular biology with high-throughput computational models. Through my coursework and independent projects, I have developed a strong quantitative background in RNA-seq differential expression, statistical validation, and dimensionality reduction.
+I am comfortable working across multiple programming languages—specifically Python, R, and Julia—which allows me to apply the most effective computational tool to a given bottleneck. Whether the task requires rigorous data pre-processing or complex non-linear mathematical programming, my goal is always to build robust, biologically accurate software solutions.
 
 **References**
 Wright, A.J., Orlic-Milacic, M., Rothfels, K. et al. Evaluating the predictive accuracy of curated biological pathways in a public knowledgebase. *Database* (2022). DOI: 10.1093/database/baac009
