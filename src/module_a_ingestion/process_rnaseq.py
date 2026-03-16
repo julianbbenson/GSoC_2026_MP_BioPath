@@ -1,35 +1,40 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 def process_differential_expression(filepath, pval_cutoff=0.05):
-    """
-    Ingests RNA-seq data and maps it to the 0.01 - 100 bounds required 
-    by the MP-BioPath optimization solver.
-    """
-    print(f"Loading genomic data from {filepath}...")
+    """Ingests RNA-seq data and maps it to the 0.01 - 100 solver bounds."""
     df = pd.read_csv(filepath)
     
-    # 1. Biological Filtering: Remove statistically insignificant noise
-    # We only want to feed actual perturbations to the solver.
-    initial_count = len(df)
-    df = df[df['padj'] <= pval_cutoff].copy()
-    filtered_count = len(df)
-    print(f"Filtered out {initial_count - filtered_count} insignificant genes (padj > {pval_cutoff}).")
+    # 1. Biological Filtering
+    df['is_significant'] = df['padj'] <= pval_cutoff
+    
+    # 2. Mathematical Mapping: log2(FC) -> Absolute FC
+    df['mp_biopath_input'] = (2 ** df['log2FoldChange']).clip(0.01, 100.0)
+    
+    return df
 
-    # 2. Mathematical Mapping: log2(FC) to Absolute FC
-    # MP-BioPath baseline is 1.0. A log2FC of 0 becomes 1.0.
-    df['absolute_fc'] = 2 ** df['log2FoldChange']
-
-    # 3. Solver Constraints: Clip values to [0.01, 100]
-    # MP-BioPath equations fail if bounds are exceeded.
-    df['mp_biopath_input'] = df['absolute_fc'].clip(lower=0.01, upper=100.0)
-
-    return df[['Gene', 'log2FoldChange', 'mp_biopath_input']]
+def plot_mapping_results(df, pval_cutoff=0.05):
+    """Generates a volcano plot highlighting the MP-BioPath mapping."""
+    plt.figure(figsize=(10, 6))
+    
+    # Plot non-significant noise in gray
+    noise = df[~df['is_significant']]
+    plt.scatter(noise['log2FoldChange'], -np.log10(noise['padj']), c='gray', alpha=0.5, label='Insignificant Noise')
+    
+    # Plot significant hits in blue
+    hits = df[df['is_significant']]
+    plt.scatter(hits['log2FoldChange'], -np.log10(hits['padj']), c='blue', alpha=0.7, label='MP-BioPath Inputs')
+    
+    plt.axhline(-np.log10(pval_cutoff), color='red', linestyle='--', label='p=0.05 Threshold')
+    plt.title("Genomic Data Mapping: log2(FC) to MP-BioPath Boundaries")
+    plt.xlabel("log2 Fold Change")
+    plt.ylabel("-log10(adj p-value)")
+    plt.legend()
+    plt.savefig("../../docs/mapping_volcano.png")
+    print("Visualization saved to docs/mapping_volcano.png")
 
 if __name__ == "__main__":
-    # Execute the pipeline on our test data
-    input_file = "../../data/mock_rnaseq.csv"
-    output_data = process_differential_expression(input_file)
-    
-    print("\n--- Final MP-BioPath Solver Inputs ---")
-    print(output_data.to_string(index=False))
+    data = process_differential_expression("../../data/mock_rnaseq.csv")
+    plot_mapping_results(data)
+    print(data[['Gene', 'mp_biopath_input']])
