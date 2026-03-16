@@ -52,6 +52,9 @@ Module A translates transcriptomic reality to solver boundaries:
 2. **Transformation:** Convert $\log_2$ values to absolute multipliers using exponential transformation ($x = 2^{\log_2(\text{FC})}$).
 3. **Solver Stability Constraints:** Hard-clip extreme values to exactly $[0.01, 100.0]$ to prevent the JuMP solver from diverging toward infinity during optimization.
 
+![Module A: Volcano plot demonstrating statistical filtering (p < 0.05) and boundary mapping of RNA-seq data prior to JuMP solver ingestion.](mapping_volcano.png)  
+*Volcano plot demonstrating statistical filtering (p < 0.05) and boundary mapping of RNA-seq data prior to JuMP solver ingestion.*
+
 ### 3.2 Module B: Graph Stitching & API Traversal (Python)
 
 The Stein Lab noted that false negatives spike significantly when biological paths cross arbitrary sub-pathway boundaries, leaving nodes disconnected (Figure 4). Module B will utilize the Reactome ContentService REST API (`/data/pathway/{id}/containedEvents`) to dynamically generate "Super-Logic Graphs."
