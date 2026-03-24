@@ -20,7 +20,7 @@ To transition MP-BioPath into a high-throughput predictive engine for modern bio
 MP-BioPath translates Reactome pathways into Logical Networks. In its 2022 evaluation, the Stein Lab evaluated 18,539 test cases against experimental literature. As demonstrated in their ROC curve analysis (Figure 3), the authors identified that a computationally predicted continuous change of 15% maximized the F1 score for classifying discrete up/down biological regulation. However, the tool currently operates strictly as a retrospective literature-validation engine.
 
 <div align="center">
-  <img src="fig3.png" width="225">
+  <img src="fig3.png">
   <br>
   <em>Figure 3: The relationship between MP-BioPath sensitivity (TPR) and false positive rate (FPR) at different cutoffs.</em>
 </div>
@@ -31,7 +31,7 @@ While the 15% cutoff established a strong baseline, the study identified specifi
 Unlike rapid Post-Translational Modifications (PTM) which act as binary switches, transcription is inherently quantitative—relying on promoter affinities and mRNA accumulation. Standard logic graphs default to qualitative states, failing to capture the physical reality of transcriptomic accumulation. 
 
 <div align="center">
-  <img src="fig6.png" width="200">
+  <img src="fig6.png">
   <br>
   <em>Figure 6: Reasons for discordance between MP-BioPath-based predictions and published evidence, highlighting GER and Entity Set dilution.</em>
 </div>
@@ -59,7 +59,7 @@ I have implemented a Module A pre-processor that translates transcriptomic reali
 3. **Solver Stability Constraints:** Hard-clipping extreme values to exactly $[0.01, 100.0]$ to prevent the JuMP solver from diverging toward infinity during optimization.
 
 <div align="center">
-  <img src="mapping_volcano.png" width="300">
+  <img src="mapping_volcano.png">
   <br>
   <em>Figure 7: Module A output demonstrating statistical filtering and boundary mapping of RNA-seq data prior to JuMP solver ingestion.</em>
 </div>
@@ -69,7 +69,7 @@ I have implemented a Module A pre-processor that translates transcriptomic reali
 The Stein Lab noted that false negatives spike significantly when biological paths cross arbitrary sub-pathway boundaries, leaving nodes disconnected (Figure 4). 
 
 <div align="center">
-  <img src="fig4.png" width="225">
+  <img src="fig4.png">
   <br>
   <em>Figure 4: Distribution of predictions with respect to the existence of a directed path, demonstrating the false negative penalty of disconnected sub-pathways.</em>
 </div>
@@ -77,7 +77,7 @@ The Stein Lab noted that false negatives spike significantly when biological pat
 * **Algorithm:** I have implemented a Depth-First Search (DFS) walk-forward algorithm in Python. This traces flow links across sub-pathway boundaries, dynamically fetching nested JSON logic tables to ensure terminal output nodes maintain mathematical linkage to the perturbed root inputs, explicitly solving the disconnected path issue shown in Figure 4.
 
 <div align="center">
-  <img src="stitched_constellation_final.png" width="350">
+  <img src="stitched_constellation_final.png">
   <br>
   <em>Figure 8: High-resolution Julia/GraphRecipes visualization of the 69-node stitched RAF/MAPK constellation, successfully resolving the disconnected path issue.</em>
 </div>
